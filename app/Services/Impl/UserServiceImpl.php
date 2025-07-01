@@ -15,7 +15,7 @@ class UserServiceImpl implements UserService
         if (!isset($this->users[$user])) {
             return false;
         }
-    
+
         $correctPassword = $this->users[$user];
         if ($password == $correctPassword) {
             return true;

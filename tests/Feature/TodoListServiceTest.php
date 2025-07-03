@@ -34,4 +34,31 @@ class TodoListServiceTest extends TestCase
             $this->assertEquals("Memakai Baju", $value["todolist"]);
         }
     }
+
+    public function testGetTodolistsEmpty()
+    {
+        // $this->todoListService->saveTodo("1", "Mamakai Kaos Kaki");
+        // $this->todoListService->saveTodo("1", "Berangkat Sekolah");
+
+        $this->assertEquals([], $this->todoListService->getTodo());
+    }
+
+    public function testGetTodolistsNotEmpty()
+    {
+        $expected = [
+            [
+                "id" => "1",
+                "todolist" => "Memakai Kaos Kaki"
+            ],
+            [
+                "id" => "2",
+                "todolist" => "Berangkat Sekolah"
+            ]
+        ];
+
+        $this->todoListService->saveTodo("1", "Memakai Kaos Kaki");
+        $this->todoListService->saveTodo("2", "Berangkat Sekolah");
+
+        $this->assertEquals($expected, $this->todoListService->getTodo());
+    }
 }

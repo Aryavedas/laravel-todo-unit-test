@@ -17,9 +17,11 @@
     <div class="container col-xl-10 col-xxl-8 px-4 py-5">
 
         <div class="row">
-            <div class="alert alert-danger" role="alert">
-                A simple primary alert—check it out!
-            </div>
+            @isset($error)
+                <div class="alert alert-danger" role="alert">
+                    {{ $error }}
+                </div>
+            @endisset
         </div>
         <div class="row">
             <form method="post" action="/logout">
@@ -47,8 +49,6 @@
         </div>
         <div class="row align-items-right g-lg-5 py-5">
             <div class="mx-auto">
-                <form id="deleteForm" method="post" style="display: none">
-                </form>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -61,10 +61,14 @@
                         @foreach ($todolist as $todo)
                             <tr>
                                 <th scope="row">{{ $todo['id'] }}</th>
-                                <td>{{ $todo['todo'] }}</td>
-                                <td>
-                                    <button class="w-100 btn btn-lg btn-danger" type="submit">Remove</button>
-                                </td>
+                                <td>{{ $todo['todolist'] }}</td>
+                                <form action="/todolist/{{ $todo['id'] }}/delete" id="deleteForm" method="post"
+                                    style="display: none">
+                                    @csrf
+                                    <td>
+                                        <button class="w-100 btn btn-lg btn-danger" type="submit">Remove</button>
+                                    </td>
+                                </form>
                             </tr>
                         @endforeach
                     </tbody>

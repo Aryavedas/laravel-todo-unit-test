@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\TodoListController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -22,5 +23,21 @@ class TodoListControllerTest extends TestCase
                 "todolist" => "Berangkat Sekolah"
             ]
         ])->get("/todolist")->assertSeeText("1")->assertSeeText("Memakai Sepatu")->assertSeeText("2")->assertSeeText("Berangkat Sekolah");
+    }
+
+    public function testAddEmptyTodo()
+    {
+        $this->withSession([
+            "user" => "Aryaveda"
+        ])->post("/todolist", [])->assertSeeText("Isian Kosong");
+    }
+
+    public function testAddTodo()
+    {
+        $this->withSession([
+            "user" => "Aryaveda"
+        ])->post("/todolist", ["todo" => "memakai baju"])
+        ->assertRedirect("/todolist");
+
     }
 }
